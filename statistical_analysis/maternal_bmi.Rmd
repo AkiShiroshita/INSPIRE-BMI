@@ -1,0 +1,84 @@
+---
+title: "INSPIRE maternal BMI"
+author: "Akihiro Shiroshita, MD, MPH"
+date: "`r Sys.time()`"
+output: 
+    word_document:
+      toc: yes
+---
+
+```{r setup, include=FALSE}
+packages = c("here",
+             "utils",
+             "rgdal",
+             "devtools",
+             "usethis",
+             "here",
+             "readr",
+             "readxl",
+             "tableone",
+             "flextable",
+             "huxtable",
+             "tidyverse",
+             "tidylog",
+             "lubridate",
+             "ggplot2",
+             "RColorBrewer",
+             "ggplotgui",
+             "ggthemes",
+             "gt",
+             "sf",
+             "mapview",
+             "zipcodeR",
+             "terra",
+             "spData",
+             "spDataLarge",
+             "ggmap",
+             "osmdata",
+             "tidycensus",
+             "zipcodeR",
+             "raster",
+             "rnaturalearth",
+             "spdep",
+             "units",
+             "rgdal",
+             "viridis",
+             "spatialreg",
+             "car",
+             "CARBayes",
+             "gstat",
+             "bkmr",
+             "broom",
+             "margins",
+             "modmarg",
+             "rms")
+
+#install.packages("spDataLarge", repos = "https://nowosad.r-universe.dev")
+package.check <- lapply(packages, FUN = function(x){
+  if (!require(x, character.only = TRUE)){
+    install.packages(x, dependencies = TRUE)
+    library(x, character.only = TRUE)
+  }
+})
+
+knitr::opts_chunk$set(
+	echo = TRUE,
+	fig.height = 4,
+	fig.pos = "t",
+	message = FALSE,
+	warning = FALSE,
+	dpi = 350,
+	out.extra = ""
+)
+
+#rm(list=ls())
+cols <- brewer.pal(6, "Paired")
+```
+
+## 
+
+```{r}
+df <- read_csv(here("output/analysis_data_gis.csv")) %>% 
+  mutate(oy_rsv_infected_dev = if_else(oy_rsv_infected_dev == 0 | is.na(oy_rsv_infected_dev), 0, 1))
+```
+
